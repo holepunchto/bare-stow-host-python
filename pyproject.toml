@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bare-stow-host"
+version = "0.0.0"
+description = "Host side of the bare-stow lifecycle for Python"
+readme = "README.md"
+license = "Apache-2.0"
+authors = [{ name = "Holepunch" }]
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8",
+  "ruff>=0.6",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bare_stow_host"]
+
+[tool.ruff]
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = [
+  "error::ResourceWarning",
+  "error::pytest.PytestUnraisableExceptionWarning",
+]

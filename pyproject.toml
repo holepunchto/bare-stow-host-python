@@ -18,6 +18,11 @@ dev = [
   "ruff>=0.6",
 ]
 
+[project.urls]
+Homepage = "https://github.com/holepunchto/bare-stow-host-python"
+Repository = "https://github.com/holepunchto/bare-stow-host-python"
+Issues = "https://github.com/holepunchto/bare-stow-host-python/issues"
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/bare_stow_host"]
 

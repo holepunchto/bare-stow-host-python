@@ -29,6 +29,8 @@ async def main():
 
 Any object with `async read()`, returning `b""` once the transport has ended, and `async write(data)` can be wrapped, such as a `Sidecar` from [bare-sidecar-python](https://github.com/holepunchto/bare-sidecar-python).
 
+Whoever wraps a transport must call `ipc.exited(code, signal)` once the worker exits, such as when the process of a sidecar exits. A transport that ends without the worker saying why is held back until then, so that reads and `ready` fail with the exit code or signal instead of ending cleanly. A transport that fails waits up to `grace` for the exit in the same way, and the worker is killed if it doesn't come.
+
 ## Protocol
 
 Every frame is a 4-byte little-endian length followed by that many bytes: A 1-byte tag and the payload. The tag is `0x00` for a control frame, whose payload is a UTF-8 JSON object carrying its `type`, and `0x01` for a user data frame. See [bare-stow-protocol](https://github.com/holepunchto/bare-stow-protocol) for the control frames.

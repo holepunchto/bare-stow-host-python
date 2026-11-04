@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "bare-stow-host"
-version = "0.1.1"
+version = "0.2.0"
 description = "Host side of the bare-stow lifecycle for Python"
 readme = "README.md"
 license = "Apache-2.0"

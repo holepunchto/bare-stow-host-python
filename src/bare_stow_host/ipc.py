@@ -385,7 +385,7 @@ class IPC:
         if self._timer is not None:
             self._timer.cancel()
 
-        if ready.exception() is not None:
+        if ready.cancelled() or ready.exception() is not None:
             self._spawn(self.close())
 
     async def _terminate(self):

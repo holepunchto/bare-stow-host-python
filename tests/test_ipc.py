@@ -261,6 +261,23 @@ def test_rejects_ready_and_terminates_the_worker_on_timeout():
     assert run(body()).code == "WORKER_TIMEOUT"
 
 
+def test_terminates_the_worker_when_ready_is_cancelled():
+    async def body():
+        left, right = pair()
+        ipc = wrap(left)
+        worker = Worker(right)
+        closing = asyncio.ensure_future(close_on_terminate(worker))
+
+        with pytest.raises(asyncio.TimeoutError):
+            await asyncio.wait_for(ipc.ready, 0.01)
+
+        await closing
+
+        return await ipc.wait()
+
+    assert run(body()) is None
+
+
 def test_terminate_kills_the_worker_after_the_grace_period():
     async def body():
         left, right = pair()
